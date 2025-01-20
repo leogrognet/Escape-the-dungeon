@@ -7,8 +7,9 @@ using namespace sf;
 using namespace std;
 
 class Entity {
-protected:
+public:
 	Sprite entitySprite;
+protected:
 	virtual void update(float deltaTime) = 0;
 	virtual void draw(RenderWindow& window) = 0;
 	Entity();

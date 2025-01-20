@@ -1,6 +1,6 @@
 #include "PatrollingEnemy.h"
 
-void PatrollingEnemy::moveEnemy(int posX, int posY)
+void PatrollingEnemy::moveEnemy()
 {
 	if (this->entitySprite.getPosition().x < 20) {
 		this->speed = -speed;
