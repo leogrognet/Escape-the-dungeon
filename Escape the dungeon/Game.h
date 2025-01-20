@@ -2,7 +2,6 @@
 
 #include "SFML/Graphics.hpp"
 #include "PatrollingEnemy.h"
-#include "ChaserEnemy.h"
 #include <iostream>
 #include <vector> 
 
@@ -14,12 +13,13 @@ using namespace sf;
 class Game {
 public:
 	Game();
-	vector<shared_ptr<Entity>> allEntity;
+	bool inGame;
+	vector<shared_ptr<Enemy>> allEntity;
 	unique_ptr<RenderWindow> window;
-	Texture allTextures;
-	void loadTexture(Texture* texture, string file);
+	shared_ptr<Texture> allTextures = make_shared<Texture>();
+	void loadTexture(shared_ptr<Texture> texture, string file);
 	void run();
-	void collisionCheck(Sprite entity_1, vector<Entity*> entity_2);
+	void collisionCheck(Sprite entity_1, vector<shared_ptr<Enemy>> entity_2);
 
 
 };

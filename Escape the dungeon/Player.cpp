@@ -2,10 +2,15 @@
 
 
 
-Player::Player(float startSpeed, Texture texture, int posX, int posY) : speed(startSpeed) {
-	entitySprite.setTexture(texture);
+Player::Player(float startSpeed, shared_ptr<Texture> texture, int posX, int posY) :  speed(startSpeed) {
+	entitySprite.setTexture(*texture);
 	entitySprite.setPosition(posX, posY);
-};
+	entitySprite.setScale(2, 2);
+
+	pos_x = entitySprite.getPosition().x;
+	pos_y = entitySprite.getPosition().y;
+}
+
 
 void Player::movePlayer() {
 
@@ -21,4 +26,18 @@ void Player::movePlayer() {
 	else if (Keyboard::isKeyPressed(Keyboard::D)) {
 		this->entitySprite.move(5, 0);
 	}
+}
+
+void Player::update(float deltaTime)
+{
+}
+
+void Player::draw(RenderWindow& window)
+{
+	window.draw(entitySprite);
+}
+
+Sprite Player::getSprite()
+{
+	return entitySprite;
 }

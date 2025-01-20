@@ -1,6 +1,8 @@
 #pragma once
-#include "Enemy.h"
+#include "ChaserEnemy.h"
 
 class PatrollingEnemy : public Enemy {
+public:
+	PatrollingEnemy(shared_ptr<Player> player, shared_ptr<Texture> texture, float start_x, float start_y, float speed);
 	void moveEnemy() override;
 };

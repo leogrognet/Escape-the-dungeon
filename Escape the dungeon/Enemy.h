@@ -6,10 +6,14 @@
 
 class Enemy : public Entity {
 protected:
-	unique_ptr<Player> player = make_unique<Player>();
-	Enemy(Player player);
+	shared_ptr<Player> player;
 	int speed;
+	
+public:
+	Enemy(shared_ptr<Player> player, shared_ptr<Texture> texture, float start_x, float start_y);
 	void update(float deltaTime) override;
 	void draw(RenderWindow& window) override;
+
 	virtual void moveEnemy() = 0;
+	Sprite getSprite();
 };

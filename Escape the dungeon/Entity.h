@@ -9,10 +9,10 @@ using namespace std;
 class Entity {
 public:
 	Sprite entitySprite;
-protected:
 	virtual void update(float deltaTime) = 0;
 	virtual void draw(RenderWindow& window) = 0;
 	Entity();
+
 };
 
 

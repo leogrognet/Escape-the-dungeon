@@ -1,17 +1,23 @@
 #include "ChaserEnemy.h"
 
+ChaserEnemy::ChaserEnemy(shared_ptr<Player> player, shared_ptr<Texture> texture, float start_x, float start_y, float speed) : Enemy(player, texture, start_x, start_y)
+{
+	this->speed = speed;
+}
+
 void ChaserEnemy::moveEnemy()
 {
-	if (entitySprite.getPosition().x > player->getSprite().getPosition().x) {
-		this->entitySprite.move(-this->speed, 0);
+
+	Vector2f direction;
+    Vector2f playerpos = Vector2f(player->getSprite().getPosition().x + (player->getSprite().getGlobalBounds().width / 2), player->getSprite().getPosition().y + (player->getSprite().getGlobalBounds().height / 2));
+    Vector2f selfpos = this->entitySprite.getPosition();
+    direction = playerpos - selfpos; 
+
+    float length = sqrt(direction.x * direction.x + direction.y * direction.y);
+	if (length != 0) {
+		direction /= length; 
 	}
-	else if (entitySprite.getPosition().x < player->getSprite().getPosition().x) {
-		this->entitySprite.move(+this->speed, 0);
-	}
-	if (entitySprite.getPosition().y > player->getSprite().getPosition().y) {
-		this->entitySprite.move(0, -this->speed);
-	}
-	else if (entitySprite.getPosition().y < player->getSprite().getPosition().y) {
-		this->entitySprite.move(0, +this->speed);
-	}
+   
+	this->entitySprite.move(direction.x * speed ,  direction.y * speed);
+
 }

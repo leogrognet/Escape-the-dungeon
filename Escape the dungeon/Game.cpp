@@ -6,7 +6,7 @@ Game::Game()
 {
 }
 
-void Game::loadTexture(Texture* texture, string file)
+void Game::loadTexture(shared_ptr<Texture> texture, string file)
 {
 
 		if (!texture->loadFromFile(file)) {
@@ -19,15 +19,16 @@ void Game::loadTexture(Texture* texture, string file)
 
 void Game::run()
 {
-	
-	loadTexture(&allTextures, "pngwing.png");
-	Player player(2, allTextures,10,10);
-	player.getSprite().setScale(1, 1);
-	allEntity.push_back(make_shared<PatrollingEnemy>());
-	allEntity.push_back(make_shared<PatrollingEnemy>());
+	inGame = true;
+	loadTexture(allTextures, "pngwing.png");
+	shared_ptr<Player> player_ptr = make_shared<Player>(2.f, allTextures, 800, 700);
+	player_ptr->getSprite().setScale(10, 10);
+	allEntity.push_back(make_shared<ChaserEnemy>(player_ptr, allTextures, 20.f, 20.f, 1.f));
+	allEntity.push_back(make_shared<PatrollingEnemy>(player_ptr, allTextures, 20.f, 20.f, 1.f));
 
 	this->window = make_unique<RenderWindow>(VideoMode(1200, 800), "Enter the Dungeon");
-	while (window->isOpen()) {
+	this->window->setFramerateLimit(60);
+	while (inGame) {
 		Event gameEvent;
 		while (this->window->pollEvent(gameEvent)) {
 			if (gameEvent.type == Event::Closed) {
@@ -36,16 +37,14 @@ void Game::run()
 		}
 		window->clear();
 
-		/*cout << "Sprite position: ("
-			<< player.getSprite().getPosition().x << ", "
-			<< player.getSprite().getPosition().y << ") "
-			<< " | Sprite size: ("
-			<< player.getSprite().getTextureRect().width << " x "
-			<< player.getSprite().getTextureRect().height << ")"
-			<< endl;*/
 
-		player.draw(*window);
-		player.movePlayer();
+		player_ptr->draw(*window);
+		player_ptr->movePlayer();
+		for (auto allEnemy : allEntity) {
+			allEnemy->draw(*window);
+			allEnemy->update(10);
+		}
+		collisionCheck(player_ptr->getSprite(), allEntity);
 
 		window->display();
 
@@ -53,11 +52,12 @@ void Game::run()
 
 }
 
-void Game::collisionCheck(Sprite entity_1, vector<Entity*> entity_2)
+void Game::collisionCheck(Sprite entity_1, vector<shared_ptr<Enemy>> entity_2)
 {
 	for (auto allEntity : entity_2) {
-		if (entity_1.getGlobalBounds().intersects(allEntity->entitySprite.getGlobalBounds())) {
-			cout << "Touché"<<endl;
+		if (entity_1.getGlobalBounds().intersects(allEntity->getSprite().getGlobalBounds())) {
+			cout << "Game Over";
+			inGame = false;
 		}
 	}
 }

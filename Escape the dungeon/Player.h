@@ -10,8 +10,8 @@ protected:
 	float speed;
 public:
 
-	Player(float startSpeed, Texture texture, int posX, int posY);
-
+	Player(float startSpeed, shared_ptr<Texture> texture, int posX, int posY);
+	//Player();
 
 	void movePlayer();
 	void update(float deltaTime) override;
