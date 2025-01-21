@@ -1,10 +1,9 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(shared_ptr<Player> _player, shared_ptr<Texture> texture, float start_x, float start_y) : player(_player)
+Enemy::Enemy(shared_ptr<Player> _player, shared_ptr<Texture> texture, float start_x, float start_y) : player(_player) , Entity(texture , start_x, start_y)
 {
-	this->entitySprite.setPosition(start_x, start_y);
-	this->entitySprite.setTexture(*texture);
+
 }
 
 
@@ -17,6 +16,10 @@ void Enemy::update(float deltaTime)
 void Enemy::draw(RenderWindow& window)
 {
 	window.draw(entitySprite);
+}
+
+void Enemy::interact(shared_ptr<Player> Player)
+{
 }
 
 Sprite Enemy::getSprite()

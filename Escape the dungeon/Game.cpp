@@ -8,7 +8,6 @@ Game::Game()
 
 void Game::loadTexture(shared_ptr<Texture> texture, string file)
 {
-
 		if (!texture->loadFromFile(file)) {
 			cout << "La texture" << file << "n'a pas pu être chargée";
 		}
@@ -21,10 +20,10 @@ void Game::run()
 {
 	inGame = true;
 	loadTexture(allTextures, "pngwing.png");
-	shared_ptr<Player> player_ptr = make_shared<Player>(2.f, allTextures, 800, 700);
+	shared_ptr<Player> player_ptr = make_shared<Player>(2.f, allTextures, 100, 800);
 	player_ptr->getSprite().setScale(10, 10);
-	allEntity.push_back(make_shared<ChaserEnemy>(player_ptr, allTextures, 20.f, 20.f, 1.f));
-	allEntity.push_back(make_shared<PatrollingEnemy>(player_ptr, allTextures, 20.f, 20.f, 1.f));
+	loadMap("Niveau 1.txt", player_ptr);
+
 
 	this->window = make_unique<RenderWindow>(VideoMode(1200, 800), "Enter the Dungeon");
 	this->window->setFramerateLimit(60);
@@ -44,7 +43,7 @@ void Game::run()
 			allEnemy->draw(*window);
 			allEnemy->update(10);
 		}
-		collisionCheck(player_ptr->getSprite(), allEntity);
+		collisionCheck(player_ptr, allEntity);
 
 		window->display();
 
@@ -52,15 +51,52 @@ void Game::run()
 
 }
 
-void Game::collisionCheck(Sprite entity_1, vector<shared_ptr<Enemy>> entity_2)
+void Game::collisionCheck(shared_ptr<Player> entity_1, vector<shared_ptr<Entity>> entity_2)
 {
 	for (auto allEntity : entity_2) {
-		if (entity_1.getGlobalBounds().intersects(allEntity->getSprite().getGlobalBounds())) {
-			cout << "Game Over";
-			inGame = false;
+		if (entity_1->getSprite().getGlobalBounds().intersects(allEntity->getSprite().getGlobalBounds())) {
+			if (auto enemy = dynamic_cast <Enemy*>(allEntity.get())){
+				enemy->interact(entity_1);
+			}
+			else if (auto object = dynamic_cast<Key*>(allEntity.get())) {
+				object->interact(entity_1);
+			}
+			else if (auto object = dynamic_cast<Potion*>(allEntity.get())) {
+				object->interact(entity_1);
+			}
 		}
 	}
 }
 
 
+void Game::loadMap(string filename, shared_ptr<Player> player)
+{
+	ifstream file(filename);
+	string line;
+	int y = 0;
+	while (getline(file, line)) {
+		for (int x = 0; x < line.size(); ++x) {
+			char tileType = line[x];
+			if (tileType == '#') {
+
+			}
+			else if (tileType == 'C') {
+				allEntity.push_back(make_shared<ChaserEnemy>(player, allTextures, 40.f*x, 40.f*y, 1.f));
+			}
+			else if (tileType == 'R') {
+				allEntity.push_back(make_shared<PatrollingEnemy>(player, allTextures, 40.f * x, 40.f * y, 1.f));
+			}
+			else if (tileType == 'P') {
+				allEntity.push_back(make_shared<Potion>(player, allTextures, 40.f * x, 40.f * y));
+			}
+			else if (tileType == 'K') {
+				allEntity.push_back(make_shared<Key>(player, allTextures, 40.f * x, 40.f * y));
+			}
+			else if (tileType == 'S') {
+
+			}
+		}
+		++y;
+	}
+}
 

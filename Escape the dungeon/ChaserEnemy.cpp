@@ -7,9 +7,9 @@ ChaserEnemy::ChaserEnemy(shared_ptr<Player> player, shared_ptr<Texture> texture,
 
 void ChaserEnemy::moveEnemy()
 {
-
+ 
 	Vector2f direction;
-    Vector2f playerpos = Vector2f(player->getSprite().getPosition().x + (player->getSprite().getGlobalBounds().width / 2), player->getSprite().getPosition().y + (player->getSprite().getGlobalBounds().height / 2));
+    Vector2f playerpos = Vector2f(this->player->getSprite().getPosition().x + (player->getSprite().getGlobalBounds().width / 2), player->getSprite().getPosition().y + (player->getSprite().getGlobalBounds().height / 2));
     Vector2f selfpos = this->entitySprite.getPosition();
     direction = playerpos - selfpos; 
 

@@ -7,14 +7,16 @@
 class Player : public Entity {
 protected:
 	int	pos_x = this->entitySprite.getPosition().x, pos_y = this->entitySprite.getPosition().y;
-	float speed;
+	bool gotKey;
 public:
-
-	Player(float startSpeed, shared_ptr<Texture> texture, int posX, int posY);
+	float speed;
+	Player(float startSpeed, shared_ptr<Texture> texture, float posX, float posY);
 	//Player();
 
 	void movePlayer();
 	void update(float deltaTime) override;
 	void draw(RenderWindow& window) override;
 	Sprite getSprite();
+	void setGotKey(bool switching);
+	bool getGotKey();
 };
