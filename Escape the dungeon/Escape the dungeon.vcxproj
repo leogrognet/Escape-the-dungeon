@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ChaserEnemy.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -150,9 +151,11 @@
     <ClCompile Include="PatrollingEnemy.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Potion.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChaserEnemy.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="InteractInterface.h" />
@@ -160,6 +163,7 @@
     <ClInclude Include="PatrollingEnemy.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Potion.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

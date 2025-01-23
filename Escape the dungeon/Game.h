@@ -3,6 +3,7 @@
 #include "SFML/Graphics.hpp"
 #include "PatrollingEnemy.h"
 #include "Potion.h"
+#include "Door.h"
 #include <iostream>
 #include <vector> 
 #include <fstream>

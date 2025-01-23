@@ -20,6 +20,7 @@ void Enemy::draw(RenderWindow& window)
 
 void Enemy::interact(shared_ptr<Player> Player)
 {
+
 }
 
 Sprite Enemy::getSprite()

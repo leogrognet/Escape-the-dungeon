@@ -9,6 +9,7 @@ using namespace std;
 class Entity {
 public:
 	Sprite entitySprite;
+	IntRect test;
 	virtual void update(float deltaTime) = 0;
 	virtual void draw(RenderWindow& window) = 0;
 	Entity(shared_ptr<Texture> texture, float start_x, float start_y);
