@@ -13,7 +13,6 @@ protected:
 
 
 public:
-	float speed;
 	Player(float startSpeed, shared_ptr<Texture> texture, float posX, float posY);
 	//Player();
 

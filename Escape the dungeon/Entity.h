@@ -8,6 +8,7 @@ using namespace std;
 
 class Entity {
 public:
+	float speed;
 	Sprite entitySprite;
 	IntRect test;
 	virtual void update(float deltaTime) = 0;

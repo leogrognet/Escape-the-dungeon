@@ -2,7 +2,8 @@
 
 ChaserEnemy::ChaserEnemy(shared_ptr<Player> player, shared_ptr<Texture> texture, float start_x, float start_y, float speed) : Enemy(player, texture, start_x, start_y)
 {
-	entitySprite.setTextureRect(IntRect(5, 9, 16, 16));
+	deltaTexture = 3;
+	entitySprite.setTextureRect(IntRect(deltaTexture * 16, 8 * 16, 16, 16));
 	entitySprite.setScale(2.5f, 2.5f);
 	this->speed = speed;
 }
@@ -19,7 +20,19 @@ void ChaserEnemy::moveEnemy()
 	if (length != 0) {
 		direction /= length; 
 	}
-   
 	this->entitySprite.move(direction.x * speed ,  direction.y * speed);
 
+}
+void ChaserEnemy::updateAnim() {
+	AnimTime = AnimClock.getElapsedTime();
+	if (AnimTime.asMilliseconds() > 100) {
+		deltaTexture++;
+		cout << deltaTexture<<endl;
+		AnimClock.restart();
+	}
+
+	if (deltaTexture * 16 >= 6*16) {
+		deltaTexture = 3;
+	}
+	entitySprite.setTextureRect(IntRect(deltaTexture * 16, 8 * 16, 16, 16));
 }

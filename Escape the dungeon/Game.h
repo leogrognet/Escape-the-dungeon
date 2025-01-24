@@ -15,15 +15,30 @@ using namespace sf;
 
 class Game {
 public:
+	void run();
+	Game();
+private:
+	int index;
+	bool inGame;
+	bool state;
+
+	Sprite victory, defeat, start;
 	shared_ptr<Player> player_ptr;
     ifstream files;
-	Game();
-	bool inGame;
+	
+	vector<string> allLevels;
+	
 	vector<shared_ptr<Entity>> allEntity;
+	shared_ptr<Texture> end = make_shared<Texture>();
+	shared_ptr<Texture> death = make_shared<Texture>();
+
 	unique_ptr<RenderWindow> window;
 	shared_ptr<Texture> allTextures = make_shared<Texture>();
 	void loadTexture(shared_ptr<Texture> texture, string file);
-	void run();
+	
 	void collisionCheck(shared_ptr<Player> entity_1, vector<shared_ptr<Entity>> entity_2);
-	void loadMap(string filename, shared_ptr<Player> player);
+	void loadMap(string filename);
+	void GameState();
+	void Finish(bool gameStatus);
+
 };
